@@ -22,9 +22,11 @@ router.patch(
 );
 
 router.post(
-  "/:id/followorunfollow",
+  "/followorunfollow/:id",
   isAuthentication,
   userController.followOrUnfollow
 );
+
+router.get("/suggestions", isAuthentication, userController.suggestions);
 
 module.exports = router;
