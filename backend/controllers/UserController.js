@@ -180,17 +180,17 @@ const postProfile = async (req, res) => {
 
 const followOrUnfollow = async (req, res) => {
   try {
-    let followers = req.user;
-    let followings = req.params.id;
+    let follower = req.user;
+    let following = req.params.id;
 
-    if (followers === followings) {
+    if (follower === following) {
       return res
         .status(401)
-        .json({ message: "You can't follow your self!", Success: false });
+        .json({ message: "You can't follow yourself!", Success: false });
     }
 
-    let user = await User.findById(followers);
-    let target = await User.findById(followings);
+    let user = await User.findById(follower);
+    let target = await User.findById(following);
 
     if (!user || !target) {
       return res
@@ -198,31 +198,19 @@ const followOrUnfollow = async (req, res) => {
         .json({ message: "User not found!", Success: false });
     }
 
-    const isFollowing = user.following.includes(followings);
+    const isFollowing = user.following.includes(following);
     if (isFollowing) {
       await Promise.all([
-        User.updateOne(
-          { _id: followings },
-          { $pull: { following: followers } }
-        ),
-        User.updateOne(
-          { _id: followers },
-          { $pull: { following: followings } }
-        ),
+        User.updateOne({ _id: following }, { $pull: { following: follower } }),
+        User.updateOne({ _id: follower }, { $pull: { following: following } }),
       ]);
       return res
         .status(200)
         .json({ message: "Unfollowed successfully", success: true });
     } else {
       await Promise.all([
-        User.updateOne(
-          { _id: followings },
-          { $push: { following: followers } }
-        ),
-        User.updateOne(
-          { _id: followers },
-          { $push: { following: followings } }
-        ),
+        User.updateOne({ _id: following }, { $push: { following: follower } }),
+        User.updateOne({ _id: follower }, { $push: { following: following } }),
       ]);
       return res
         .status(200)
