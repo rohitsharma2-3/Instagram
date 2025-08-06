@@ -20,4 +20,20 @@ router.post(
   postController.allPost
 );
 
+router.get("/userallposts", isAuthentication, postController.userAllPost);
+
+router.post("/likepost/:id", isAuthentication, postController.likePost);
+
+router.post("/dislikepost/:id", isAuthentication, postController.dislikePost);
+
+router.post(
+  "/commentonpost/:id",
+  isAuthentication,
+  postController.commentOnPost
+);
+
+router.get("/allcomments/:id", isAuthentication, postController.allComments);
+
+router.delete("/deletepost/:id", isAuthentication, postController.deletePost);
+
 module.exports = router;
