@@ -213,17 +213,17 @@ const deletePost = async (req, res) => {
     let postId = req.params.id;
     let author = req.user;
 
-    if (postId === author) {
-      return res
-        .status(404)
-        .json({ message: "You are not authorized!", Success: false });
-    }
-
     let post = await Post.findById(postId);
     if (!post) {
       return res
         .status(404)
         .json({ message: "Post not found", Success: false });
+    }
+
+    if (post.author.toString() !== author) {
+      return res
+        .status(404)
+        .json({ message: "You are not authorized!", Success: false });
     }
 
     let user = await User.findById(author);
