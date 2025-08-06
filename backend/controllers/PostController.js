@@ -1,3 +1,4 @@
+const Comment = require("../models/CommentModel");
 const Post = require("../models/PostModel");
 
 const post = async (req, res) => {
@@ -31,4 +32,28 @@ const post = async (req, res) => {
   }
 };
 
-module.exports = { post };
+const allPost = async (_, res) => {
+  try {
+    let post = await Post.find()
+      .sort({ createdAt: -1 })
+      .populate({ path: "author", select: "username profilePic" })
+      .populate({
+        path: "comments",
+        sort: { createdAt: -1 },
+        populate: { path: "author", select: "username profilePic" },
+      });
+
+    return res.status(201).json({
+      message: "All posts!",
+      Success: true,
+      post,
+    });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Server is not working!", Success: false });
+  }
+};
+
+module.exports = { post, allPost };

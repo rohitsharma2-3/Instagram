@@ -12,4 +12,12 @@ router.post(
   isAuthentication,
   postController.post
 );
+
+router.post(
+  "/allposts",
+  upload.single("image"),
+  isAuthentication,
+  postController.allPost
+);
+
 module.exports = router;
