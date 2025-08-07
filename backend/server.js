@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const main = require("./db/Mongo_DB");
 const UserRoutes = require("./routes/UserRoute");
 const PostRoutes = require("./routes/PostRoute");
+const MsgRoutes = require("./routes/MsgRoute");
 
 main();
 const PORT = process.env.PORT || 4000;
@@ -20,6 +21,7 @@ app.use(cookieParser());
 
 app.use("/insta", UserRoutes);
 app.use("/insta", PostRoutes);
+app.use("/insta", MsgRoutes);
 
 app.get("/", (_, res) => {
   res.send("Server Is Start!");

@@ -13,7 +13,7 @@ router.post(
   postController.post
 );
 
-router.post(
+router.get(
   "/allposts",
   upload.single("image"),
   isAuthentication,
@@ -22,9 +22,9 @@ router.post(
 
 router.get("/userallposts", isAuthentication, postController.userAllPost);
 
-router.post("/likepost/:id", isAuthentication, postController.likePost);
+router.get("/likepost/:id", isAuthentication, postController.likePost);
 
-router.post("/dislikepost/:id", isAuthentication, postController.dislikePost);
+router.get("/dislikepost/:id", isAuthentication, postController.dislikePost);
 
 router.post(
   "/commentonpost/:id",
@@ -35,5 +35,7 @@ router.post(
 router.get("/allcomments/:id", isAuthentication, postController.allComments);
 
 router.delete("/deletepost/:id", isAuthentication, postController.deletePost);
+
+router.post("/bookmark/:id", isAuthentication, postController.bookMarkPosts);
 
 module.exports = router;

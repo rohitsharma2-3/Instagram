@@ -117,6 +117,7 @@ const likePost = async (req, res) => {
   }
 };
 
+
 const dislikePost = async (req, res) => {
   try {
     let likedByUser = req.user;
@@ -243,6 +244,41 @@ const deletePost = async (req, res) => {
   }
 };
 
+const bookMarkPosts = async (req, res) => {
+  try {
+    let postId = req.params.id;
+    let author = req.user;
+
+    let post = await Post.findById(postId);
+
+    if (!post) {
+      return res
+        .status(404)
+        .json({ message: "No post found!", Success: false });
+    }
+    let user = await User.findById(author);
+
+    if (user) {
+      await user.updateOne({ $pull: { bookmarks: postId } });
+      await user.save();
+      return res
+        .status(200)
+        .json({ message: "Post removed from bookmark!", Success: false });
+    } else {
+      await user.updateOne({ $addToSet: { bookmarks: postId } });
+      await user.save();
+      return res
+        .status(200)
+        .json({ message: "Post is saved in bookmark!", Success: false });
+    }
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Server is not working!", Success: false });
+  }
+};
+
 module.exports = {
   post,
   allPost,
@@ -252,4 +288,5 @@ module.exports = {
   commentOnPost,
   allComments,
   deletePost,
+  bookMarkPosts,
 };
