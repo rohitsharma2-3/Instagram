@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/UserModel");
+const Post = require("../models/PostModel");
 
 const signUp = async (req, res) => {
   try {
@@ -93,6 +94,16 @@ const login = async (req, res) => {
       expiresIn: "7d",
     });
 
+    let post = await Promise.all(
+      user.posts.map(async (id) => {
+        let post = await Post.findById(id);
+        if (post.author.equals(user._id)) {
+          return post;
+        } else {
+          return null;
+        }
+      })
+    );
     const newUser = {
       _id: user._id,
       name: user.name,
@@ -101,7 +112,7 @@ const login = async (req, res) => {
       bio: user.bio,
       following: user.following,
       followers: user.followers,
-      posts: user.posts,
+      posts: post,
       gender: user.gender,
       bookmarks: user.bookmarks,
     };

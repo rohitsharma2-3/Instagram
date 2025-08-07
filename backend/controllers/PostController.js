@@ -117,7 +117,6 @@ const likePost = async (req, res) => {
   }
 };
 
-
 const dislikePost = async (req, res) => {
   try {
     let likedByUser = req.user;
@@ -258,18 +257,22 @@ const bookMarkPosts = async (req, res) => {
     }
     let user = await User.findById(author);
 
-    if (user) {
+    if (user.bookmarks.includes(post._id)) {
       await user.updateOne({ $pull: { bookmarks: postId } });
-      await user.save();
-      return res
-        .status(200)
-        .json({ message: "Post removed from bookmark!", Success: false });
+      return res.status(200).json({
+        type: "Unsaved",
+        message: "Post removed from bookmark!",
+        Success: false,
+      });
     } else {
       await user.updateOne({ $addToSet: { bookmarks: postId } });
-      await user.save();
       return res
         .status(200)
-        .json({ message: "Post is saved in bookmark!", Success: false });
+        .json({
+          type: "Saved",
+          message: "Post is saved in bookmark!",
+          Success: false,
+        });
     }
   } catch (error) {
     console.log(error);

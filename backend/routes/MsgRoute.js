@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const isAuthentication = require("../middleware/isAuthentication");
-const { storage } = require("../middleware/Cloudinary");
-const multer = require("multer");
-const upload = multer({ storage });
+const msgController = require("../controllers/MsgController");
+
+router.post("/sendmsg/:id", isAuthentication, msgController.sendMessage);
+
+router.get("/getmsg/:id", isAuthentication, msgController.getMessage);
 
 module.exports = router;
