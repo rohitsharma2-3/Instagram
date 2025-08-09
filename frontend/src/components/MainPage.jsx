@@ -1,8 +1,13 @@
 import React from 'react'
+import Sidebar from './Sidebar'
+import RightSidebar from './RightSidebar'
 
 const MainPage = () => {
   return (
-    <div>MainPage</div>
+    <div className='flex'>
+        <Sidebar />
+        <RightSidebar />
+    </div>
   )
 }
 

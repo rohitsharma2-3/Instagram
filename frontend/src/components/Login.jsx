@@ -24,16 +24,25 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     axios
-      .post("http://localhost:4040/insta/signup", formData, {
-        withCredentials: true,
-      })
+      .post(
+        "http://localhost:4040/insta/signup",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {
-        toast.success(res.data.message);
         setFormData({
           name: "",
           email: "",
           password: "",
         });
+        toast.success(res.data.message);
         if (res.data.Success === true) {
           navigate("/");
         }
@@ -50,9 +59,18 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     axios
-      .post("http://localhost:4040/insta/login", formData, {
-        withCredentials: true,
-      })
+      .post(
+        "http://localhost:4040/insta/login",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         toast.success(res.data.message);
         setFormData({
