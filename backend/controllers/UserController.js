@@ -54,9 +54,11 @@ const signUp = async (req, res) => {
       bookmarks: user.bookmarks,
     };
 
-    return res
-      .status(201)
-      .json({ message: "Successfully login!", data: newUser, Success: true });
+    return res.status(201).json({
+      message: "Account created successfully!",
+      data: newUser,
+      Success: true,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Server Error", Success: false });
@@ -136,7 +138,7 @@ const logout = (_, res) => {
       httpOnly: true,
       Secure: false,
     });
-    res.status(201).json({ message: "Successfully logout!", Success: true });
+    res.status(201).json({ message: "See you soon!", Success: true });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Server Error", Success: false });
