@@ -24,18 +24,9 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     axios
-      .post(
-        "http://localhost:4040/insta/signup",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-        {
-          withCredentials: true,
-        }
-      )
+      .post("http://localhost:4040/insta/signup", formData, {
+        withCredentials: true,
+      })
       .then((res) => {
         setFormData({
           name: "",
@@ -59,18 +50,9 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     axios
-      .post(
-        "http://localhost:4040/insta/login",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-        {
-          withCredentials: true,
-        }
-      )
+      .post("http://localhost:4040/insta/login", formData, {
+        withCredentials: true,
+      })
       .then((res) => {
         toast.success(res.data.message);
         setFormData({

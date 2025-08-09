@@ -8,15 +8,22 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const logout = () => {
-    axios.get("http://localhost:4040/insta/logout").then((res) => {
-        console.log(res.data)
-      if (res.data.Success === "true") {
+    axios.get("http://localhost:4040/insta/logout", {
+        withCredentials: true
+    })
+    .then((res) => {
+      if (res.data.Success === true) {
+        toast.success(res.data.message);
         navigate("/login");
       }
+    })
+    .catch((err) =>  {
+        toast.error(err.response?.data?.message)
     });
   };
 
