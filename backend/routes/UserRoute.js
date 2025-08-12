@@ -10,7 +10,7 @@ router.post("/signup", userController.signUp);
 
 router.post("/login", userController.login);
 
-router.get("/logout", userController.logout);
+router.get("/logout", isAuthentication, userController.logout);
 
 router.get("/:id/getprofile", isAuthentication, userController.getProfile);
 
@@ -27,6 +27,6 @@ router.post(
   userController.followOrUnfollow
 );
 
-router.get("/suggestions", isAuthentication, userController.suggestions);
+router.get("/suggestions", userController.suggestions);
 
 module.exports = router;

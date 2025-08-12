@@ -15,8 +15,6 @@ router.post(
 
 router.get(
   "/allposts",
-  upload.single("image"),
-  isAuthentication,
   postController.allPost
 );
 

@@ -6,7 +6,7 @@ const Authentication = (req, res, next) => {
     if (!token) {
       return res
         .status(401)
-        .json({ message: "User not authenticate", Success: false });
+        .json({ message: "Login First!", Success: false });
     }
 
     let decoded = jwt.verify(token, process.env.SUPER_SECRET);

@@ -73,7 +73,7 @@ const Login = () => {
   };
   return (
     <div className="p-4">
-      <div className="w-2/2 md:w-6/12 shadow-lg mx-auto mt-30 p-5 md:p-10">
+      <div className="w-2/2  shadow-lg mx-auto mt-30 p-5 md:p-10">
         {login === "signup" ? (
           <h2 className="text-3xl font-bold text-center">SignUp Form</h2>
         ) : (
